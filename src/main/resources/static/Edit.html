@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户资料修改</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>用户资料修改</legend>
+</fieldset>
+
+<!--<form class="layui-form" action="/ruser" method="get">-->
+<div class="ziliao" style="display: block;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">ID：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="userid" name="userid" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">注册时间：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="registerTime" name="registerTime" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">旧身份：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="oldUserType" name="olduserName" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">新身份：</label>
+        <div class="layui-input-inline">
+            <!--<input style="width: 500px;" type="text" id="newUserType" name="newuserName" value="" lay-verify="title"   placeholder="请输入新身份" class="layui-input">
+            -->
+            <select style="width: 500px; height: 37px; border-color: #e6e6e6; padding-left: 7px;"  id="newUserType" name="newuserName" name="ShipType" lay-verify="required" lay-search="">
+                <option value="0">请选择新身份</option>
+                <option value="普通用户">普通用户</option>
+                <option value="超级用户">超级用户</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">旧用户名：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="olduserName" name="olduserName" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">新用户名：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="newuserName" name="newuserName" value="" lay-verify="title" placeholder="请输入新用户名"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">旧密码：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="oldpassword" name="oldpassword" value="" lay-verify="title"  readonly  unselectable="on" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">新密码：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="password" id="newpassword" name="newpassword" value="" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input">
+        </div>
+    </div>
+    <div class="">
+        <button  href="javascript:;" onclick="tijiao()" style="margin-left: 240px;" class="layui-btn ">提交修改</button>
+        <button  href="javascript:;" onclick="back()" style="margin-left: 57px;" class="layui-btn ">放弃修改</button>
+    </div>
+</div>
+<script src="jquery-1.8.3.min.js"></script>
+<script src="layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+
+    var Ed1 = localStorage.getItem("E1");
+    document.getElementById("userid").value = Ed1;
+    var Ed2 = localStorage.getItem("E2");
+    document.getElementById("olduserName").value = Ed2;
+    var Ed3 = localStorage.getItem("E3");
+    document.getElementById("oldpassword").value = Ed3;
+    var Ed4 = localStorage.getItem("E4");
+    document.getElementById("oldUserType").value = Ed4;
+    var Ed5 = localStorage.getItem("E5");
+    document.getElementById("registerTime").value = Ed5;
+    function back() {
+        localStorage.removeItem('E1');
+        localStorage.removeItem('E2');
+        localStorage.removeItem('E3');
+        localStorage.removeItem('E4');
+        localStorage.removeItem('E5');
+        window.parent.location = 'ZJ.html';
+    }
+
+    function tijiao() {
+        var Edi1=document.getElementById('userid').value
+        var Edi2=document.getElementById('newuserName').value
+        var Edi3=document.getElementById('newpassword').value
+        var Edi4=document.getElementById('newUserType').value
+        if (Edi1!='' && Edi2!='' && Edi3!='' && Edi4!=''){
+            $.ajax({
+                url: 'edit',
+                data:{id: Edi1, name: Edi2,password: Edi3, identype: Edi4},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.type == 'success') {
+                        alert("修改用户资料成功！");
+                        localStorage.removeItem('E1');
+                        localStorage.removeItem('E2');
+                        localStorage.removeItem('E3');
+                        localStorage.removeItem('E4');
+                        localStorage.removeItem('E5');
+                        window.parent.location = 'ZJ.html';
+                    } else if(data.type == 'exist'){
+                        alert("用户名已存在！请重新填写");
+                    }else{
+                        alert(data.error);
+                    }
+                }
+            });
+
+        }else{
+            alert("请检查输入是否完整！");
+        }
+
+    }
+</script>
+
+</body>
+</html>

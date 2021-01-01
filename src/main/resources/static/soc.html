@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>审核打分表单</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>审核打分表单</legend>
+</fieldset>
+
+<!--<form class="layui-form" action="/ruser" method="get">-->
+<div class="ziliao" style="display: block;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">序号：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="q1" name="q1" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">船名：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="q2" name="q2" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">提交时间：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="q3" name="q3" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开始时间：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="q4" name="q4" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">结束时间：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="q5" name="q5" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作业时长：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="q6" name="q6" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">驾驶员信息：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="q7" name="q7" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">积分审核：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="q8" name="q8" value="" lay-verify="required" readonly  unselectable="on"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">打分：</label>
+        <div class="layui-input-block">
+            <input style="width: 500px;" type="text" id="q9" name="q9" lay-verify="title" placeholder="请输入分值"  class="layui-input">
+        </div>
+    </div>
+
+    <div class="">
+        <button  href="javascript:;" onclick="tijiao()" style="margin-left: 240px;" class="layui-btn ">提交修改</button>
+        <button  href="javascript:;" onclick="back()" style="margin-left: 57px;" class="layui-btn ">放弃修改</button>
+    </div>
+</div>
+<script src="jquery-1.8.3.min.js"></script>
+<script src="layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+
+    var Ed1 = localStorage.getItem("E1");
+    document.getElementById("q1").value = Ed1;
+    var Ed2 = localStorage.getItem("E2");
+    document.getElementById("q2").value = Ed2;
+    var Ed3 = localStorage.getItem("E3");
+    document.getElementById("q3").value = Ed3;
+    var Ed4 = localStorage.getItem("E4");
+    document.getElementById("q4").value = Ed4;
+    var Ed5 = localStorage.getItem("E5");
+    document.getElementById("q5").value = Ed5;
+    var Ed6 = localStorage.getItem("E6");
+    document.getElementById("q6").value = Ed6;
+    var Ed7 = localStorage.getItem("E7");
+    document.getElementById("q7").value = Ed7;
+    var Ed8 = localStorage.getItem("E8");
+    document.getElementById("q8").value = Ed8;
+
+    function back() {
+        localStorage.removeItem('E1');
+        localStorage.removeItem('E2');
+        localStorage.removeItem('E3');
+        localStorage.removeItem('E4');
+        localStorage.removeItem('E5');
+        localStorage.removeItem('E6');
+        localStorage.removeItem('E7');
+        localStorage.removeItem('E8');
+        window.parent.location = 'ZJ.html';
+    }
+
+    function tijiao() {
+        var Edi=document.getElementById('q9').value
+        var Edi1=document.getElementById('q1').value
+        if (Edi!=''){
+            $.ajax({
+                url: 'tuginfoget',
+                data:{id: Edi1, sco : Edi,},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.type == 'success') {
+                        alert("打分成功！"+Edi);
+                        localStorage.removeItem('E1');
+                        localStorage.removeItem('E2');
+                        localStorage.removeItem('E3');
+                        localStorage.removeItem('E4');
+                        localStorage.removeItem('E5');
+                        window.parent.location = 'ZJ.html';
+                    } else{
+                        alert("未知错误，请联系管理员！");
+                    }
+                }
+            });
+
+        }else{
+            alert("请检查输入是否完整！");
+        }
+
+    }
+</script>
+
+</body>
+</html>

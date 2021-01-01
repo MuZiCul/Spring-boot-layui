@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>拖轮调度一览表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="SendToWork">派工</button>
+        <button class="layui-btn layui-btn-sm" lay-event="Limmitation">限制</button>
+    </div>
+
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">提交日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="test11" placeholder="yyyy年MM月dd日">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="test11" placeholder="选择">
+                </div>
+            </div>
+
+            <div class="demoTable">
+                搜索船名：
+                <div class="layui-inline">
+                    <input class="layui-input" name="shipname" id="test" autocomplete="off">
+                </div>
+                <button class="layui-btn" data-type="reload">搜索</button>
+            </div>
+
+        </div>
+    </div>
+
+
+</script>
+
+
+<script src="layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            ,url:'tuguselist'
+            ,toolbar:'#toolbarDemo'
+            ,cols: [[
+                {type:'radio'}
+                ,{field:'id', width:80, title: '序号', sort: true}
+                ,{field:'shipname', width:130, title: '船名'}
+                ,{field:'audittime', width:130, title: '审核日期', sort: true}
+                ,{field:'inPort', width:80, title: '进出港'}
+                ,{field:'area', width:150, title: '作业区域及泊位'}
+                ,{field:'mount', width:120,title: '拖轮艘数'}
+                ,{field:'applicant', width:100, title: '申请人', sort: true}
+                ,{field:'company', width:120, title: '所属船代'}
+                ,{field:'state', title: '派工状态', width: 120}
+                ,{field:'detail', width:135, title: '详情', sort: true}
+            ]]
+        });
+
+        //头工具栏事件 派工
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+            switch(obj.event){
+                case 'SendToWork':
+                    //var data = checkStatus.data;  //获取选中行数据
+                    layer.msg('派工按钮！');
+                    break;
+                case 'Limmitation':
+                    //var data = checkStatus.data;  //获取选中行数据
+                    //layer.alert(JSON.stringify(data));
+                    layer.msg('限制按钮！');
+                    break;
+            };
+        });
+
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+
+            //常规用法
+            laydate.render({
+                elem: '#1test1'
+            });
+
+            //国际版
+            laydate.render({
+                elem: '#1test1-1'
+                ,lang: 'en'
+            });
+
+            //年选择器
+            laydate.render({
+                elem: '#1test2'
+                ,type: 'year'
+            });
+
+            //年月选择器
+            laydate.render({
+                elem: '#t1est3'
+                ,type: 'month'
+            });
+
+            //时间选择器
+            laydate.render({
+                elem: '#t1est4'
+                ,type: 'time'
+            });
+
+            //日期时间选择器
+            laydate.render({
+                elem: '#1test5'
+                ,type: 'datetime'
+            });
+
+            //日期范围
+            laydate.render({
+                elem: '#1test6'
+                ,range: true
+            });
+        });
+    });
+
+</script>
+
+</body>
+</html>

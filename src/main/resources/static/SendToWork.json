@@ -1,0 +1,31 @@
+{
+  "code": 0
+  ,"msg": ""
+  ,"data": [{
+
+    "shipname": "湛港拖1"
+    ,"shiptype": "全回转拖轮"
+    ,"shipstate": "维修"
+    ,"workmount": "0"
+  }, {
+    "shipname": "湛港拖十一"
+    ,"shiptype": "全回转拖轮"
+    ,"shipstate": "使用"
+    ,"workmount": "3"
+  }, {
+    "shipname": "湛港拖十二"
+    ,"shiptype": "全回转拖轮"
+    ,"shipstate": "使用"
+    ,"workmount": "2"
+  }, {
+    "shipname": "湛港拖15"
+    ,"shiptype": "全回转拖轮"
+    ,"shipstate": "使用"
+    ,"workmount": "2"
+  }, {
+    "shipname": "湛港拖16"
+    ,"shiptype": "全回转拖轮"
+    ,"shipstate": "使用"
+    ,"workmount": "2"
+  }]
+}  
